@@ -13,6 +13,8 @@ def get_details_callback():
     results = get_url_details(url)
 
     dpg.set_value(lbl_title, results['title'])
+    dpg.set_value(lbl_extractor, results['extractor_key'])
+    dpg.set_value(lbl_format, results['format'])
     # dpg.set_value(lbl_title, "Wooh")
     meta_json = json.dumps(results, indent=4)
 
@@ -33,7 +35,28 @@ with dpg.window(label="main", width=500, height=300) as main_win_id:
     dpg.set_item_theme(main_win_id, LIGHT_IMGUI_THEME)
     dpg.add_text("Check file details")
     txt_url = dpg.add_input_text(label="URL")
-    lbl_title = dpg.add_text("...")
+
+    with dpg.table(header_row=False, row_background=True,
+                   borders_innerH=True, borders_outerH=True,
+                   borders_innerV=True, borders_outerV=True):
+
+        dpg.add_table_column(width_fixed=True)
+        dpg.add_table_column()
+
+        dpg.add_text("Title:")
+        dpg.add_table_next_column()
+        lbl_title = dpg.add_text("...", wrap=0.0)
+
+        dpg.add_table_next_column()
+        dpg.add_text("Extractor:")
+        dpg.add_table_next_column()
+        lbl_extractor = dpg.add_text("...", wrap=0.0)
+
+        dpg.add_table_next_column()
+        dpg.add_text("Format:")
+        dpg.add_table_next_column()
+        lbl_format = dpg.add_text("...", wrap=0.0)
+
     dpg.add_button(label="Get details", callback=get_details_callback)
 
 
