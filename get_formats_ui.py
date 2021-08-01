@@ -33,7 +33,7 @@ with dpg.window(label="main", width=500, height=300) as main_win_id:
     dpg.set_item_theme(main_win_id, LIGHT_IMGUI_THEME)
     dpg.add_text("Check file details")
     txt_url = dpg.add_input_text(label="URL")
-    lbl_title = dpg.add_text("...", label="Title", show_label=True, wrap=0)
+    lbl_title = dpg.add_text("...")
     dpg.add_button(label="Get details", callback=get_details_callback)
 
 
