@@ -16,6 +16,14 @@ def get_details_callback():
     dpg.set_value(lbl_title, results['title'])
     dpg.set_value(lbl_extractor, results['extractor_key'])
     dpg.set_value(lbl_format, results['format'])
+
+    all_formats = [x['format'] for x in results['formats']]
+    audio_formats = [x for x in all_formats if 'audio' in x]
+    video_formats = [x for x in all_formats if 'audio' not in x]
+
+    dpg.configure_item(cmb_audio_fmt, items=audio_formats[:])
+    dpg.configure_item(cmb_video_fmt, items=video_formats[:])
+
     # dpg.set_value(lbl_title, "Wooh")
     meta_json = json.dumps(results, indent=4)
 
@@ -69,9 +77,9 @@ with dpg.window(label="main", width=500, height=300) as main_win_id:
         dpg.add_table_column(label="Video Format")
         dpg.add_table_column(label="Audio Format")
 
-        dpg.add_combo(items=["A", "B", "C"], width=-1)
+        cmb_video_fmt = dpg.add_combo(items=["A", "B", "C"], width=-1)
         dpg.add_table_next_column()
-        dpg.add_combo(items=["A", "B", "C"], width=-1)
+        cmb_audio_fmt = dpg.add_combo(items=["A", "B", "C"], width=-1)
 
     dpg.add_spacing(count=2)
     dpg.add_button(label="Get details", callback=get_details_callback)
